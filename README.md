@@ -4,7 +4,7 @@
 
 <h1>Retail Landing Zone Platform</h1>
 
-<p><strong>The Strategic Cloud Foundation for Omnichannel Retail, POS Systems, and Global Supply Chain Excellence</strong></p>
+<p><strong>The Strategic Cloud Foundation for Omnichannel Retail, POS Systems, and Global Supply Chain Excellence.</strong></p>
 
 [![Standard: PCI-DSS](https://img.shields.io/badge/Standard-PCI--DSS-blue.svg?style=for-the-badge&labelColor=000000)]()
 [![Status: Production--Ready](https://img.shields.io/badge/Status-Production--Ready-emerald.svg?style=for-the-badge&labelColor=000000)]()
@@ -13,7 +13,7 @@
 <br/>
 
 > **"Retail is detail, and the cloud is the ultimate detail engine."** 
-> Retail Landing Zone (Retail-LZ) is an enterprise-grade platform designed to provide a secure, scalable, and industry-aligned foundation for modern retail workloads. It orchestrates the complex interplay between e-commerce storefronts, physical POS systems, global inventory hubs, and customer data platforms. By providing a standardized architecture that aligns with PCI-DSS requirements and omnichannel delivery patterns, it enables retailers to innovate faster, optimize supply chains, and deliver seamless customer experiences across every touchpoint.
+> **Retail Landing Zone (Retail-LZ)** is an enterprise-grade platform designed to provide a secure, scalable, and industry-aligned foundation for modern retail workloads. It orchestrates the complex interplay between e-commerce storefronts, physical POS systems, global inventory hubs, and customer data platforms.
 
 </div>
 
@@ -21,426 +21,265 @@
 
 ## 🏛️ Executive Summary
 
-Modern retail is no longer just about selling products; it's about managing a high-frequency global data ecosystem. Organizations fail to scale their digital transformations because of fragmented networking, inconsistent security postures across stores, and siloed data platforms.
+Modern retail is no longer just about selling products; it's about managing a high-frequency global data ecosystem. Organizations often fail to scale their digital transformations because of fragmented networking and inconsistent security postures across thousands of physical stores that create significant operational friction.
 
-This platform provides the **Retail Cloud Control Plane**. It implements a complete **Omnichannel Framework**—from hub-and-spoke networking that connects thousands of stores to the cloud, to automated inventory synchronization and regional cost allocation models. By operationalizing the retail landing zone, it ensures that your digital infrastructure is as resilient as your physical stores and as agile as your customer's demands.
+This platform provides the **Retail Cloud Control Plane**. It implements a complete **Omnichannel Framework**, enabling Retail IT and Digital Transformation teams to manage global commerce as a first-class citizen. By automating the deployment of store-edge infrastructure and the synchronization of global inventory, we ensure that every retail asset is resilient, secured by design, and optimized for seamless customer experiences across every touchpoint.
+
+---
+
+## 📐 Architecture Storytelling: Principal Reference Models
+
+### 1. Principal Architecture: Global Retail Landing Zone & Commerce Orchestration Plane
+This diagram illustrates the end-to-end flow from omnichannel customer engagement to edge-side POS processing, cloud-native order fulfillment, and institutional auditing.
+
+```mermaid
+graph LR
+    %% Subgraph Definitions
+    subgraph CustomerChannels["Omnichannel Engagement Hub"]
+        direction TB
+        Web["E-commerce Web Frontends"]
+        Mobile["Mobile Commerce Apps"]
+        Kiosk["In-Store Digital Kiosks"]
+    end
+
+    subgraph IntelligenceEngine["Commerce Intelligence Hub"]
+        direction TB
+        API["FastAPI Retail Gateway"]
+        Inventory["Global Inventory Sync"]
+        Order["Omnichannel Order Engine"]
+        Customer["Customer Data Platform (CDP)"]
+    end
+
+    subgraph StoreEdge["Store Edge & POS Plane"]
+        direction TB
+        POS["Point-of-Sale Terminals"]
+        Edge["Edge Compute (K3s/IoT)"]
+        SDWAN["Store SD-WAN Gateway"]
+    end
+
+    subgraph CompliancePlane["PCI-DSS Security Hub"]
+        direction TB
+        CDE["Cardholder Data Env (Isolated)"]
+        Token["Payment Tokenization Service"]
+        Audit["Compliance & Audit Auditor"]
+    end
+
+    subgraph DevOps["Retail-as-Code Orchestration"]
+        direction TB
+        Stamps["Automated Store Stamps"]
+        TF["Terraform Retail Modules"]
+        Lake["Forensic Transaction Lake"]
+    end
+
+    %% Flow Arrows
+    CustomerChannels -->|1. Create Order| API
+    StoreEdge -->|2. POS Transaction| API
+    API -->|3. Sync Stock| Inventory
+    API -->|4. Orchestrate| Order
+    API -->|5. Enrich Profile| Customer
+    
+    Order -->|6. Process Payment| CompliancePlane
+    CompliancePlane -->|7. Tokenize| Token
+    Token -->|8. Secure Vault| CDE
+    
+    API -->|9. Visualize Posture| Audit
+    TF -->|10. Provision Store| StoreEdge
+    API -->|11. Archive Transaction| Lake
+
+    %% Styling
+    classDef channels fill:#f5f5f5,stroke:#616161,stroke-width:2px;
+    classDef intel fill:#ede7f6,stroke:#311b92,stroke-width:2px;
+    classDef edge fill:#e3f2fd,stroke:#0d47a1,stroke-width:2px;
+    classDef compliance fill:#fce4ec,stroke:#880e4f,stroke-width:2px;
+    classDef devops fill:#fffde7,stroke:#f57f17,stroke-width:2px;
+
+    class CustomerChannels channels;
+    class IntelligenceEngine intel;
+    class StoreEdge edge;
+    class CompliancePlane compliance;
+    class DevOps devops;
+```
+
+### 2. The Retail Lifecycle Management Flow
+The continuous path of a retail transaction from initial engagement and ordering to secure fulfillment and delivery.
+
+```mermaid
+graph LR
+    Engage["Engage & Personalize"] --> Order["Order & Pay"]
+    Order --> Fulfill["Fulfill & Logistic"]
+    Fulfill --> Deliver["Deliver & Return"]
+    Deliver --> Audit["Forensic Audit"]
+```
+
+### 3. Tiered Retail Zone Model
+Standardizing retail infrastructure across Corporate HQ, Regional Distribution Centers, and physical Store Edge locations.
+
+```mermaid
+graph TD
+    Hub["Retail Hub"] --> P0["P0: Corporate HQ (Global)"]
+    Hub --> P1["P1: Regional DC (Warehouse)"]
+    Hub --> P2["P2: Store Edge (Local)"]
+    P0 --- C0["Global ERP & BI"]
+    P1 --- C1["WMS & Logistics"]
+    P2 --- C2["POS & IoT Gateways"]
+```
+
+### 4. PCI-DSS 4.0 Compliant Perimeter
+Isolating the Cardholder Data Environment (CDE) to minimize audit scope and ensure institutional payment security.
+
+```mermaid
+graph LR
+    User["Customer POS/Web"] --> WAF["WAF & Firewall"]
+    WAF --> CDE["Isolated CDE Subnet"]
+    CDE --> Token["Tokenization Service"]
+    CDE -->|Block| Internet["Public Internet"]
+```
+
+### 5. Inventory Intelligence & Stock Sync Flow
+Ensuring real-time stock accuracy across web, mobile, and thousands of physical store locations.
+
+```mermaid
+graph TD
+    Sale["Store/Web Sale"] --> Sync["Sync Engine"]
+    Sync --> Global["Global Inventory Hub"]
+    Global --> Alert{"Low Stock?"}
+    Alert -->|Yes| Restock["Replenishment Order"]
+```
+
+### 6. Edge Compute Node Architecture (K3s/IoT)
+Deploying low-latency processing at the store edge to handle POS transactions and local IoT telemetry.
+
+```mermaid
+graph LR
+    POS["POS Terminal"] --> Edge["Local K3s Cluster"]
+    IoT["IoT Fridge/Shelves"] --> Edge
+    Edge -->|Async Sync| Cloud["Central Retail Hub"]
+```
+
+### 7. Omnichannel Commerce Integration Hub
+Converging disparate sales channels into a unified commerce engine for consistent pricing and promotion management.
+
+```mermaid
+graph TD
+    Web["E-commerce"] --- Hub["Commerce Hub"]
+    Mobile["Mobile App"] --- Hub
+    Pos["In-Store POS"] --- Hub
+    Hub --> Rules["Global Promo Engine"]
+```
+
+### 8. Identity & RBAC for Retail Governance
+Managing fine-grained access to retail operations based on organizational roles and store hierarchies.
+
+```mermaid
+graph TD
+    Admin["Regional Admin"] --> Stores["Regional Store Mgmt"]
+    Mgr["Store Manager"] --> Local["Local Store Ops"]
+    Tech["Field Tech"] --> Infra["Edge Infrastructure"]
+```
+
+### 9. Retail Compliance Scorecard & Security Posture
+Monitoring organizational adherence to PCI-DSS, GDPR, and CCPA standards across all retail touchpoints.
+
+```mermaid
+graph TD
+    Score["Retail Posture: 94%"] --> Risk["Compliance Gap: 6%"]
+    Score --- C1["PCI-DSS (100%)"]
+    Score --- C2["GDPR (88%)"]
+```
+
+### 10. IaC Deployment: Retail-as-Code Framework
+Using Terraform to deploy standardized "store stamps" that include all necessary networking, compute, and security resources.
+
+```mermaid
+graph LR
+    Stamp["Store Blueprint (HCL)"] --> TF["Terraform Apply"]
+    TF --> Store1["Store-101 (Live)"]
+    TF --> Store2["Store-102 (Live)"]
+```
+
+### 11. Metadata Lake for Forensic Retail Audit
+Storing long-term records of every transaction, inventory change, and administrative action for institutional auditing.
+
+```mermaid
+graph LR
+    Trans["Retail Transaction"] --> Stream["Forensic Stream"]
+    Stream --> Lake["Retail Metadata Lake"]
+    Lake --> Trends["Omnichannel Efficiency Trends"]
+```
 
 ---
 
 ## 🏛️ Core Retail Pillars
 
-1. **Omnichannel Foundation**: Unified networking and identity model that spans e-commerce, mobile apps, and physical store locations (POS).
-2. **Global Inventory Orchestration**: Real-time stock tracking and automated replenishment logic across multiple warehouses and store locations.
-3. **PCI-DSS Aligned Security**: Hardened security patterns designed for payment processing environments, including network isolation and data encryption.
-4. **Supply Chain Visibility**: Integrated telemetry for order processing, logistics tracking, and supply chain health monitoring.
-5. **Customer Data Platform (CDP)**: Centralized identity and loyalty management to provide a 360-degree view of the retail customer journey.
-6. **Retail FinOps & Economics**: Regional cost allocation models and store-level budget tracking to ensure cloud efficiency matches business margins.
-
----
-
-## 📐 Architecture Storytelling: 50+ Advanced Diagrams
-
-### 1. The Omnichannel Retail Lifecycle
-*The flow from customer engagement to order fulfillment.*
-```mermaid
-graph TD
-    subgraph "Customer Channels"
-        Web[E-commerce Web]
-        App[Mobile App]
-        POS[Store POS Terminal]
-    end
-
-    subgraph "Retail Platform"
-        Order[Order Orchestrator]
-        Inventory[Inventory Hub]
-        Payment[Payment Gateway]
-    end
-
-    subgraph "Fulfillment"
-        Warehouse[Warehouse Management]
-        Logistics[Supply Chain / Shipping]
-    end
-
-    Web & App & POS -->|1. Create Order| Order
-    Order -->|2. Check Stock| Inventory
-    Order -->|3. Process Payment| Payment
-    Payment -->|4. Finalize| Order
-    Order -->|5. Fulfill| Warehouse
-    Warehouse -->|6. Ship| Logistics
-```
-
-### 2. Hub-and-Spoke Retail Networking
-*Connecting stores and regional hubs to the central cloud foundation.*
-```mermaid
-graph TD
-    Hub[Central Hub: US-East-1] --- Spoke1[Spoke: Store-101]
-    Hub --- Spoke2[Spoke: Store-102]
-    Hub --- Spoke3[Spoke: Regional DC-London]
-    Hub --- Spoke4[Spoke: E-comm Frontend]
-    
-    Spoke1 --- POS1[POS Terminals]
-    Spoke3 --- Inventory[Local Stock Hub]
-```
-
-### 3. Inventory Synchronization Flow
-*Ensuring real-time stock accuracy across all channels.*
-```mermaid
-graph LR
-    POS[Store Sale] --> Sync[Sync Engine]
-    Web[Online Sale] --> Sync
-    Return[Customer Return] --> Sync
-    
-    Sync --> Hub[Global Inventory Hub]
-    Hub --> Alert{Low Stock?}
-    Alert -->|Yes| Restock[Replenishment Order]
-```
-
-### 4. Retail RBAC & Identity Model
-```mermaid
-graph TD
-    Identity[Retail Identity] --> Store[Store Ops Role]
-    Identity --> Regional[Regional Admin Role]
-    Identity --> Finance[Finance Role]
-    
-    Store -->|View| Orders[Orders & Stock]
-    Regional -->|Manage| Stores[Store Configurations]
-    Finance -->|Analyze| Costs[Cloud Spend & ROI]
-```
-
-### 5. Deployment Topology: Multi-Region High Availability
-```mermaid
-graph LR
-    User[Customer] --> CDN[Edge / CDN]
-    CDN --> LB1[Region A: Active]
-    CDN --> LB2[Region B: Standby]
-    
-    LB1 & LB2 --> K8S[Kubernetes Cluster]
-    K8S --> DB[(Global DB Sync)]
-```
-
-### 6. Order State Machine
-```mermaid
-graph LR
-    P[Pending] --> V[Validated]
-    V --> S[Stock Reserved]
-    S --> Pay[Paid]
-    Pay --> F[Fulfilling]
-    F --> Ship[Shipped]
-```
-
-### 7. Foundation: Multi-Environment Setup
-```mermaid
-graph LR
-    F[Foun] --> M[Mult]
-```
-
-### 8. Networking: Private Connectivity
-```mermaid
-graph LR
-    N[Netw] --> P[Priv]
-```
-
-### 9. Component: Order Service
-```mermaid
-graph LR
-    C[Comp] --> O[Orde]
-```
-
-### 10. Component: Inventory Service
-```mermaid
-graph LR
-    C[Comp] --> I[Inve]
-```
-
-### 11. Component: Customer Service
-```mermaid
-graph LR
-    C[Comp] --> C[Cust]
-```
-
-### 12. Component: POS Connector
-```mermaid
-graph LR
-    C[Comp] --> P[POSC]
-```
-
-### 13. Logic: Order Validation
-```mermaid
-graph LR
-    L[Logi] --> O[Orde]
-```
-
-### 14. Logic: Replenishment Trigger
-```mermaid
-graph LR
-    L[Logi] --> R[Repl]
-```
-
-### 15. Logic: Conversion Calculation
-```mermaid
-graph LR
-    L[Logi] --> C[Conv]
-```
-
-### 16. Logic: Regional Cost Weighting
-```mermaid
-graph LR
-    L[Logi] --> R[Regi]
-```
-
-### 17. Architecture: Central Retail Hub
-```mermaid
-graph LR
-    A[Arch] --> C[Cent]
-```
-
-### 18. Architecture: Store-Edge Connectivity
-```mermaid
-graph LR
-    A[Arch] --> S[Stor]
-```
-
-### 19. Architecture: Real-time Analytics Lake
-```mermaid
-graph LR
-    A[Arch] --> R[Real]
-```
-
-### 20. Pattern: Event-driven Inventory
-```mermaid
-graph LR
-    P[Patt] --> E[Even]
-```
-
-### 21. Pattern: Store-as-a-Spoke
-```mermaid
-graph LR
-    P[Patt] --> S[Stor]
-```
-
-### 22. Pattern: Compliance-as-Code (PCI)
-```mermaid
-graph LR
-    P[Patt] --> C[Comp]
-```
-
-### 23. Security: Tokenized Payments
-```mermaid
-graph LR
-    S[Secu] --> T[Toke]
-```
-
-### 24. Security: Store VPN Tunneling
-```mermaid
-graph LR
-    S[Secu] --> S[Stor]
-```
-
-### 25. Security: Encrypted PII Data
-```mermaid
-graph LR
-    S[Secu] --> E[Encr]
-```
-
-### 26. Feature: Real-time Stock Ticker
-```mermaid
-graph LR
-    F[Feat] --> R[Real]
-```
-
-### 27. Feature: Store Performance Heatmap
-```mermaid
-graph LR
-    F[Feat] --> S[Stor]
-```
-
-### 28. Feature: Order Tracking Map
-```mermaid
-graph LR
-    F[Feat] --> O[Orde]
-```
-
-### 29. Compliance: PCI Audit Logs
-```mermaid
-graph LR
-    C[Comp] --> P[PCIA]
-```
-
-### 30. Compliance: GDPR Customer Rights
-```mermaid
-graph LR
-    C[Comp] --> G[GDPR]
-```
-
-### 31. Infrastructure: Redis Stock Cache
-```mermaid
-graph LR
-    I[Infr] --> R[Redi]
-```
-
-### 32. Infrastructure: Postgres Retail DB
-```mermaid
-graph LR
-    I[Infr] --> P[Post]
-```
-
-### 33. Deployment: Kubernetes Retail Pods
-```mermaid
-graph LR
-    D[Depl] --> K[Kube]
-```
-
-### 34. Deployment: Multi-Region Store Sync
-```mermaid
-graph LR
-    D[Depl] --> M[Mult]
-```
-
-### 35. Monitoring: Order Success Dashboard
-```mermaid
-graph LR
-    M[Moni] --> O[Orde]
-```
-
-### 36. Monitoring: Store Latency Heatmap
-```mermaid
-graph LR
-    M[Moni] --> S[Stor]
-```
-
-### 37. UI: Store Ops Dashboard
-```mermaid
-graph LR
-    U[UI] --> S[Stor]
-```
-
-### 38. UI: Inventory Hub View
-```mermaid
-graph LR
-    U[UI] --> I[Inve]
-```
-
-### 39. UI: Customer Journey Workspace
-```mermaid
-graph LR
-    U[UI] --> C[Cust]
-```
-
-### 40. UI: Retail KPI Analytics
-```mermaid
-graph LR
-    U[UI] --> R[Reta]
-```
-
-### 41. CI/CD: Retail service build pipeline
-```mermaid
-graph LR
-    C[CICD] --> R[Reta]
-```
-
-### 42. CI/CD: POS integration test pipeline
-```mermaid
-graph LR
-    C[CICD] --> P[POSI]
-```
-
-### 43. Strategy: Customer-Centric Retail
-```mermaid
-graph LR
-    S[Stra] --> C[Cust]
-```
-
-### 44. Strategy: Inventory Frugality
-```mermaid
-graph LR
-    S[Stra] --> I[Inve]
-```
-
-### 45. Feature: Auto-replenishment Orders
-```mermaid
-graph LR
-    F[Feat] --> A[Auto]
-```
-
-### 46. Feature: Mobile App Store Locator
-```mermaid
-graph LR
-    F[Feat] --> M[Mobi]
-```
-
-### 47. Feature: Loyalty Point Calculator
-```mermaid
-graph LR
-    F[Feat] --> L[Loya]
-```
-
-### 48. Logic: Sentiment Analysis on Feedback
-```mermaid
-graph LR
-    L[Logi] --> S[Sent]
-```
-
-### 49. Data Model: Retail Order Entity
-```mermaid
-graph LR
-    D[Data] --> R[Reta]
-```
-
-### 50. Enterprise Retail Resilience
-```mermaid
-graph LR
-    E[Entr] --> R[Reta]
-```
+1.  **Omnichannel Foundation**: Unified networking and identity model spanning e-commerce and physical POS terminals.
+2.  **Global Inventory Orchestration**: Real-time stock tracking and automated replenishment across warehouses and stores.
+3.  **PCI-DSS Aligned Security**: Hardened security patterns designed for isolated payment processing environments.
+4.  **Supply Chain Visibility**: Integrated telemetry for order processing, logistics tracking, and supply chain health.
+5.  **Customer Data Platform (CDP)**: Centralized identity and loyalty management for a 360-degree customer view.
+6.  **Retail FinOps & Economics**: Regional cost allocation and store-level budget tracking for operational efficiency.
 
 ---
 
 ## 🛠️ Technical Stack & Implementation
 
 ### Retail Engine & APIs
-- **Framework**: Python 3.11+ / FastAPI.
-- **Order Engine**: Lifecycle management for omnichannel orders.
-- **Inventory Engine**: Real-time stock tracking and replenishment logic.
-- **POS Integration**: Simulated store terminal synchronization.
-- **Governance Hub**: Regional cost allocation and retail-specific RBAC.
-- **Cache**: Redis for high-speed stock availability and session management.
-- **Persistence**: PostgreSQL for order history, customer profiles, and metadata.
-- **Identity**: OIDC / JWT with role-based store operations access.
+*   **Framework**: Python 3.11+ / FastAPI.
+*   **Order Engine**: Lifecycle management for omnichannel orders and payment orchestration.
+*   **Inventory Engine**: Real-time stock tracking with asynchronous replenishment logic.
+*   **POS Integration**: Standardized connectors for store-edge terminal synchronization.
+*   **State Management**: PostgreSQL (Metadata Lake) and Redis (Stock Cache).
 
-### Frontend (Retail Dashboard)
-- **Framework**: React 18 / Vite.
-- **Theme**: Dark Blue / Emerald (Modern Retail aesthetic).
-- **Visualization**: Recharts for revenue trends and conversion metrics.
+### Retail Dashboard (UI)
+*   **Framework**: React 18 / Vite.
+*   **Theme**: Dark Blue / Emerald (Modern Retail aesthetic).
+*   **Visualization**: Recharts for revenue trends, conversion rates, and store performance heatmaps.
 
-### Infrastructure
-- **Runtime**: AWS EKS (Kubernetes).
-- **Deployment**: Helm charts for retail services and dashboard distribution.
-- **IaC**: Terraform (Modular with Retail focus).
+### Infrastructure & DevOps
+*   **Runtime**: AWS EKS or Azure Kubernetes Service (AKS).
+*   **IaC**: Modular Terraform for deploying store stamps and central hub distributions.
+
+---
+
+## 🏗️ IaC Mapping (Module Structure)
+
+| Module | Purpose | Real Services |
+| :--- | :--- | :--- |
+| **`infrastructure/hub`** | Central management plane | EKS, PostgreSQL, Redis |
+| **`infrastructure/edge`** | Store-side compute and network | K3s, SD-WAN, IoT Greengrass |
+| **`infrastructure/pci`** | Payment security and isolation | WAF, Private Link, KMS |
+| **`infrastructure/analytics`** | Retail BI and audit sinks | S3, Athena, Quicksight |
 
 ---
 
 ## 🚀 Deployment Guide
 
-### Local Development
+### Local Principal Environment
 ```bash
-# Clone the repository
+# Clone the retail platform
 git clone https://github.com/devopstrio/retail-lz.git
 cd retail-lz
 
-# Setup environment
+# Configure environment
 cp .env.example .env
 
-# Launch the Retail stack (API, Services, DB, Redis, UI)
+# Launch the Retail stack
 make up
 
-# Seed initial inventory
+# Seed initial inventory data
 make seed-inventory
 
-# Simulate POS order sync
-make sync-orders
+# Simulate POS transaction sync
+make sync-pos
 ```
+
 Access the Retail Dashboard at `http://localhost:3000`.
 
 ---
 
 ## 📜 License
 Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+<div align="center">
+  <p>© 2026 Devopstrio. All rights reserved.</p>
+</div>
